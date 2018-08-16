@@ -1,0 +1,18 @@
+﻿<Properties StartupConfiguration="{AF52A860-B23F-C772-FC49-A251B2F6C7F0}|">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Endless2DTerrain/Core/Scripts/TerrainDisplayer.cs">
+    <Files>
+      <File FileName="Assets/move.cs" Line="91" Column="19" />
+      <File FileName="Assets/InputHelper.cs" Line="3" Column="25" />
+      <File FileName="Assets/TouchCreator.cs" Line="4" Column="25" />
+      <File FileName="Assets/cameramove.cs" Line="17" Column="2" />
+      <File FileName="Assets/Endless2DTerrain/Core/Scripts/TerrainDisplayer.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+</Properties>
