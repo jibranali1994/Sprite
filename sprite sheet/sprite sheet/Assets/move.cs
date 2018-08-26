@@ -168,6 +168,7 @@ public class move : MonoBehaviour {
     private void FixedUpdate()
     {
         // move
+        /*
         if (force)
         {
             rb.AddForce(Vector2.right * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
@@ -176,7 +177,7 @@ public class move : MonoBehaviour {
                 force = false;
             });
 
-        }
+        }*/
 
 
         if (playerBody.velocity.magnitude < moveSpeed)
