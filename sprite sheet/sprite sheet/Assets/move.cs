@@ -20,8 +20,54 @@ public class move : MonoBehaviour {
     private float jumpSpeed = 15f;
     private bool check = false;
     public bool shouldJump = false;
-    public bool force=true;
+    public bool force = false;
     private Text textbox;
+    private Rigidbody2D playerBody;
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+
+        var x = Mathf.Round(animator.GetFloat("x"));
+        var y = Mathf.Round(animator.GetFloat("y"));
+        
+
+        switch (coll.gameObject.tag)
+        {
+            case "enemy":
+                if (x > 0 && y == 0)
+                    Destruct(coll.gameObject);
+                else
+                    Destroy(this.gameObject);
+
+                break;
+            case "enemyUp":
+                if (x > 0 && y > 0)
+                    Destruct(coll.gameObject);
+                else
+                    Destroy(this.gameObject);
+                break;
+
+
+
+
+
+        }
+
+       
+
+        
+        
+
+    }
+
+
+    void Destruct(GameObject obj)
+    {
+        var objControl = obj.GetComponent<enemy_move>();
+        objControl.Die();
+
+    }
 
     void Start()
     {
@@ -29,27 +75,22 @@ public class move : MonoBehaviour {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         textbox = text.GetComponent<Text>();
+        playerBody = this.GetComponent<Rigidbody2D>();
 
     }
 
     void Update()
     {
-        //animator.SetBool("sword", true);
-
-        //List<Touch> touches = InputHelper.GetTouches();
-
-        //Debug.Log(touches.Count);
-
-        // animator.SetBool("sword", true);
+       
 
 #if UNITY_EDITOR
 
         if (Input.GetMouseButtonDown(0)) // user is touching the screen with a single touch
         {
 
-            // Touch touch = touches[0];
+            
             fp = Input.mousePosition; // get the touch
-            Debug.Log(fp + "fp");
+          
             animator.SetBool("sword", true);
 
 
@@ -59,9 +100,7 @@ public class move : MonoBehaviour {
         if (Input.GetMouseButtonUp(0)) //check if the finger is removed from the screen
             {
                 lp = Input.mousePosition;
-                // check = true; //last touch position. Ommitted if you use list
-
-                Debug.Log("lp" + lp);
+              //  Debug.Log("lp" + lp);
                 check = true;
                 // animator.SetBool("sword", false);
             }
@@ -77,30 +116,21 @@ public class move : MonoBehaviour {
         if (Input.touchCount > 0 ) // user is touching the screen with a single touch
         {
             
-            // Touch touch = touches[0];
+            
             Touch touch = Input.GetTouch(0); // get the touch
 
 
             if (  touch.phase==TouchPhase.Began) //check for the first touch
                 {
-                    //fp = touch.position;
-                fp = touch.position;
-                    //animator.SetBool("sword", true);
-                    //lp = touch.position;
-                    Debug.Log("fp" + fp);
-                animator.SetBool("sword", true);
-                    
+                    fp = touch.position;
+                    animator.SetBool("sword", true);    
                 }
 
            
             if ( touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
                 {
-                    lp = touch.position;
-                   // check = true; //last touch position. Ommitted if you use list
-                    
-                    Debug.Log("lp" + lp);
+                    lp = touch.position;    
                     check = true;
-               // animator.SetBool("sword", false);
                 }
 
             check = check ? SwipeSet(fp, lp) : false; 
@@ -118,7 +148,7 @@ public class move : MonoBehaviour {
         Vector2 delta = new Vector2();
         delta.Set(deltaX, deltaY);
         delta.Normalize();
-        Debug.Log(delta.x);
+       // Debug.Log(delta.x);
 
         animator.SetFloat("x", delta.x);
         animator.SetFloat("y", delta.y);
@@ -138,15 +168,21 @@ public class move : MonoBehaviour {
     private void FixedUpdate()
     {
         // move
+        /*
         if (force)
         {
             rb.AddForce(Vector2.right * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            Observable.Timer(TimeSpan.FromSeconds(2)).Subscribe(x => {
+            Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(x => {
                
                 force = false;
             });
 
-        }
+        }*/
+
+
+        if (playerBody.velocity.magnitude < moveSpeed)
+            rb.AddForce(Vector2.right * moveSpeed * Time.fixedDeltaTime, ForceMode2D.Impulse);
+        
 
         // jump
         if(shouldJump) {
