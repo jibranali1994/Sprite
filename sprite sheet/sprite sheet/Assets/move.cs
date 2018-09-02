@@ -23,6 +23,7 @@ public class move : MonoBehaviour {
     public bool force = false;
     private Text textbox;
     private Rigidbody2D playerBody;
+    public GameObject jumpAnimation;
 
 
     void OnCollisionEnter2D(Collision2D coll)
@@ -187,6 +188,7 @@ public class move : MonoBehaviour {
         // jump
         if(shouldJump) {
             rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
+            jumpAnimation.SetActive(true);
             shouldJump = false;
         }
     }

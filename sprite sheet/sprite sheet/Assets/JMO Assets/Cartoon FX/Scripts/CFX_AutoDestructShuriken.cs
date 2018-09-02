@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UniRx;
+using System;
 
 [RequireComponent(typeof(ParticleSystem))]
 public class CFX_AutoDestructShuriken : MonoBehaviour
@@ -8,28 +10,17 @@ public class CFX_AutoDestructShuriken : MonoBehaviour
 	
 	void OnEnable()
 	{
-		StartCoroutine("CheckIfAlive");
-	}
+        Observable.Timer(TimeSpan.FromMilliseconds(800)).Subscribe(x => {
+            if (OnlyDeactivate)
+            {
+
+                this.gameObject.SetActive(false);
+            }
+            else
+                GameObject.Destroy(this.gameObject);
+        });
+    }
 	
-	IEnumerator CheckIfAlive ()
-	{
-		while(true)
-		{
-			yield return new WaitForSeconds(0.5f);
-			if(!GetComponent<ParticleSystem>().IsAlive(true))
-			{
-				if(OnlyDeactivate)
-				{
-					#if UNITY_3_5
-						this.gameObject.SetActiveRecursively(false);
-					#else
-						this.gameObject.SetActive(false);
-					#endif
-				}
-				else
-					GameObject.Destroy(this.gameObject);
-				break;
-			}
-		}
-	}
+	
+	
 }
